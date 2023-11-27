@@ -8,11 +8,11 @@ def produce_encryption_alphabet(key: int) -> dict:
     """
     This method produces an encrypted alphabet based on the traditional one
     :param key: the key on which encrypt the alphabet according to the caesar cipher
-    :return:
+    :return: the shifted alphabet
     """
     shifted_alphabet = {}
     for key_dict, item_dict in original_alphabet.items():
-        item = (original_alphabet[key_dict] + key) % 26
+        item: int = (original_alphabet[key_dict] + key) % 26
         for key_val, item_val in original_alphabet.items():
             if item_val == item:
                 shifted_alphabet[key_val] = item_dict
@@ -21,10 +21,15 @@ def produce_encryption_alphabet(key: int) -> dict:
 
 
 def produce_decryption_alphabet(encrypted_alphabet: dict, key: int) -> dict:
+    """
+    This method, given the encrypted alphabet, produces the correspondent decrypted one
+    :param encrypted_alphabet: the alphabet to decrypt
+    :param key: the key to decrypt the alphabet
+    :return:
+    """
     shifted_alphabet = {}
     for key_dict, item_dict in original_alphabet.items():
-        item = (original_alphabet[key_dict] - key) % 26
-        print(item)
+        item: int = (original_alphabet[key_dict] - key) % 26
         for key_val, item_val in encrypted_alphabet.items():
             if item_val == item:
                 shifted_alphabet[key_val] = item_dict
@@ -33,7 +38,13 @@ def produce_decryption_alphabet(encrypted_alphabet: dict, key: int) -> dict:
 
 
 def encryption(message: str, key: int) -> str:
-    shifted_alphabet = produce_encryption_alphabet(key)
+    """
+    This method encrypt the message passed as argument.
+    :param message: the message to encrypt
+    :param key: the key used to encrypt the message
+    :return: the encrypted message
+    """
+    shifted_alphabet: dict = produce_encryption_alphabet(key)
     for key, val in shifted_alphabet.items():
         for original_key, original_val in original_alphabet.items():
             if original_val == val:
@@ -43,7 +54,14 @@ def encryption(message: str, key: int) -> str:
 
 
 def decryption(message: str, key: int) -> str:
-    shifted_alphabet = produce_decryption_alphabet(key)
+    """
+    This method uses the key passed as argument to decrypt the message
+    :param message: message to decrypt
+    :param key: the key used to decrypt the message
+    :return:
+    """
+    encrypted_alphabet: dict = produce_encryption_alphabet(key)
+    shifted_alphabet: dict = produce_decryption_alphabet(encrypted_alphabet, key)
     for key, val in shifted_alphabet.items():
         for original_key, original_val in original_alphabet.items():
             if original_val == val:
